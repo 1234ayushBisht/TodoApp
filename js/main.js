@@ -21,6 +21,7 @@ class TodoList {
     }
 
     removeItem(id) {
+        console.log(id)
         let lefts = []
         items.forEach(item => {
             if (item.id !== id) {
