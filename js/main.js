@@ -9,6 +9,7 @@ if (items) {
 class TodoList {
     item(name) {
         return {
+            id: this.createID(),
             name: name,
             time: moment().format('MMMM Do YYYY, h:mm:ss a')
         }
@@ -19,10 +20,10 @@ class TodoList {
         items = JSON.parse(localStorage.getItem("items"))
     }
 
-    removeItem(name) {
+    removeItem(id) {
         let lefts = []
         items.forEach(item => {
-            if (item.name !== name) {
+            if (item.id !== id) {
                 lefts.push(item)
             }
         })
@@ -39,6 +40,16 @@ class TodoList {
             <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
         </div>`
     }
+    
+    createID(){
+         var dt = new Date().getTime();
+         var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+         var r = (dt + Math.random()*16)%16 | 0;
+         dt = Math.floor(dt/16);
+         return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+    });
+    return uuid;
+    }
 
     renderItems() {
         if (items || items.length !== 0) {
@@ -51,7 +62,7 @@ class TodoList {
                 li.style.margin = "10px"
                 li.innerHTML = `
                 <b>${item.name.toUpperCase()}</b>, On - ${item.time}
-                <button onClick=removeItem("${item.name}") style="float:right; clear: both;" class="deleteBtn btn btn-danger">DELETE</button>
+                <button onClick=removeItem(${item.id}) style="float:right; clear: both;" class="deleteBtn btn btn-danger">DELETE</button>
                 `
                 document.getElementById("itemList").appendChild(li)
             })
@@ -86,6 +97,6 @@ addItemBtn.addEventListener("click", () => {
     }
 })
 
-function removeItem(name) {
-    todoList.removeItem(name)
+function removeItem(id) {
+    todoList.removeItem(id)
 }
