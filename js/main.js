@@ -62,7 +62,7 @@ class TodoList {
                 li.style.margin = "10px"
                 li.innerHTML = `
                 <b>${item.name.toUpperCase()}</b>, On - ${item.time}
-                <button onClick=removeItem("${item.id}") style="float:right; clear: both;" class="deleteBtn btn btn-danger">DELETE</button>
+                <button onClick=removeItem(`${item.id}`) style="float:right; clear: both;" class="deleteBtn btn btn-danger">DELETE</button>
                 `
                 document.getElementById("itemList").appendChild(li)
             })
